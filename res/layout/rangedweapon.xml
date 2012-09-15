@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtLc"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtDamage"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtAcc"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtRange"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtRof"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtShots"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtMinst"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtBulk"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtRcl"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtCost"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtWeight"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/val_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, CharacterViewerActivity!</string>
+    <string name="app_name">GURPS Character Viewer</string>
+    <string name="sax_exception">A SAX exception has occured</string>
+    <string name="io_exception">An IO exception has occured</string>
+    <string name="parser_config_exception">A parser configuration exception has occured</string>
+    <string name="val_name">Name</string>
+    <string name="val_value">Value</string>
+    <string name="val_score">Score</string>
+    <string name="val_points">Points</string>
+    <string name="val_level">Level</string>
+
+</resources>
