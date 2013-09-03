@@ -3,6 +3,7 @@ package uk.org.downesward.gurps;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
@@ -20,12 +21,14 @@ import uk.org.downesward.utiliites.XMLUtilities;
 import com.lamerman.FileDialog;
 import com.lamerman.SelectionMode;
 
-import android.app.TabActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,11 +37,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CharacterViewerActivity extends TabActivity {
+public class CharacterViewerActivity extends Activity {
 	private static final int REQUEST_OPEN = 1;
 	private Document character;
 	private GeneralAtrributeAdapter m_generaladapter;
@@ -64,15 +66,17 @@ public class CharacterViewerActivity extends TabActivity {
 	private ArrayList<Spell> m_spells = new ArrayList<Spell>();
 	private SpellAdapter m_spelladapter;
 
+
+	 private Context mContext;
+
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.main);
-		Resources res = getResources(); // Resource object to get Drawables
-		TabHost tabHost = getTabHost(); // The activity TabHost
-		TabHost.TabSpec spec; // Resusable TabSpec for each tab
+        mContext = this;
+        setContentView(R.layout.main);
 
 		this.m_generaladapter = new GeneralAtrributeAdapter(this,
 				R.layout.generalattribute, m_general);
@@ -93,113 +97,56 @@ public class CharacterViewerActivity extends TabActivity {
 				R.layout.equipment, m_equipment);
 		this.m_spelladapter = new SpellAdapter(this, R.layout.spell, m_spells);
 
-		ListView lstGeneral = (ListView) findViewById(R.id.lstGeneral);
+		ListView lstGeneral = new ListView(mContext);
 		lstGeneral.setAdapter(this.m_generaladapter);
 
-		ListView lstAttribs = (ListView) findViewById(R.id.lstAttributes);
+		ListView lstAttribs =  new ListView(mContext);
 		lstAttribs.setAdapter(this.m_attribsadapter);
 
-		ListView lstAdvantages = (ListView) findViewById(R.id.lstAdvantages);
+		ListView lstAdvantages = new ListView(mContext);
 		lstAdvantages.setAdapter(this.m_advantagesadapter);
 
-		ListView lstDisadvantages = (ListView) findViewById(R.id.lstDisadvantages);
+		ListView lstDisadvantages =  new ListView(mContext);
 		lstDisadvantages.setAdapter(this.m_disadvantagesadapter);
 
-		ListView lstPerks = (ListView) findViewById(R.id.lstPerks);
+		ListView lstPerks =  new ListView(mContext);
 		lstPerks.setAdapter(this.m_perksadapter);
 
-		ListView lstQuirks = (ListView) findViewById(R.id.lstQuirks);
+		ListView lstQuirks =  new ListView(mContext);
 		lstQuirks.setAdapter(this.m_quirksadapter);
 
-		ListView lstSkills = (ListView) findViewById(R.id.lstSkills);
+		ListView lstSkills =  new ListView(mContext);
 		lstSkills.setAdapter(this.m_skillsadapter);
 
-		ListView lstRangedWeapons = (ListView) findViewById(R.id.lstRangedWeapons);
+		ListView lstRangedWeapons =  new ListView(mContext);
 		lstRangedWeapons.setAdapter(this.m_rangedweaponsadapter);
 
-		ListView lstMeleeWeapons = (ListView) findViewById(R.id.lstMeleeWeapons);
+		ListView lstMeleeWeapons =  new ListView(mContext);
 		lstMeleeWeapons.setAdapter(this.m_meleeweaponsadapter);
 
-		ListView lstEquipment = (ListView) findViewById(R.id.lstEquipment);
+		ListView lstEquipment =  new ListView(mContext);
 		lstEquipment.setAdapter(this.m_equipmentadapter);
 
-		ListView lstSpells = (ListView) findViewById(R.id.lstSpells);
+		ListView lstSpells =  new ListView(mContext);
 		lstSpells.setAdapter(this.m_spelladapter);
+		
 
-		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost
-				.newTabSpec("general")
-				.setIndicator("General",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstGeneral);
-		tabHost.addTab(spec);
+		Vector<View> pages = new Vector<View>();
+		pages.add(lstGeneral);
+		pages.add(lstAttribs);
+		pages.add(lstAdvantages);
+		pages.add(lstDisadvantages);
+		pages.add(lstPerks);
+		pages.add(lstQuirks);
+		pages.add(lstSkills);
+		pages.add(lstRangedWeapons);
+		pages.add(lstMeleeWeapons);
+		pages.add(lstEquipment);
+		pages.add(lstSpells);	
 
-		spec = tabHost
-				.newTabSpec("attributes")
-				.setIndicator("Attributes",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstAttributes);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("advantages")
-				.setIndicator("Advantages",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstAdvantages);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("disadvantages")
-				.setIndicator("Disadvantages",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstDisadvantages);
-		tabHost.addTab(spec);
-
-		spec = tabHost.newTabSpec("perks")
-				.setIndicator("Perks", res.getDrawable(R.drawable.ic_tab_perks))
-				.setContent(R.id.lstPerks);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("quirks")
-				.setIndicator("Quirks", res.getDrawable(R.drawable.ic_tab_quirks))
-				.setContent(R.id.lstQuirks);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("skills")
-				.setIndicator("Skills", res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstSkills);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("rangedweapons")
-				.setIndicator("Ranged Weapons",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstRangedWeapons);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("meleeweapons")
-				.setIndicator("Melee Weapons",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstMeleeWeapons);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("equipment")
-				.setIndicator("Equipment",
-						res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstEquipment);
-		tabHost.addTab(spec);
-
-		spec = tabHost
-				.newTabSpec("spells")
-				.setIndicator("Spells", res.getDrawable(R.drawable.ic_launcher))
-				.setContent(R.id.lstSpells);
-		tabHost.addTab(spec);
-
-		tabHost.setCurrentTab(0);
+        ViewPager vp = (ViewPager) findViewById(R.id.viewpager);
+        CustomPagerAdapter adapter = new CustomPagerAdapter(mContext,pages);
+        vp.setAdapter(adapter);
 	}
 
 	@Override
@@ -277,8 +224,8 @@ public class CharacterViewerActivity extends TabActivity {
 					addAttribute(general, xPath, "blockusing", "Block Using");
 					addAttribute(general, xPath, "blockscore", "Block Score");
 
-					View tab;
-
+					ViewPager vp = (ViewPager) findViewById(R.id.viewpager);
+					 
 					if (node != null && node.getTextContent().length() > 0) {
 						this.m_generaladapter.add(new GeneralAttribute(
 								"Campaign Tech Level", node.getTextContent()));
@@ -314,27 +261,26 @@ public class CharacterViewerActivity extends TabActivity {
 					setupTraitList(this.m_perksadapter,
 							character.getElementsByTagName("Perks"));
 
-					tab = getTabHost().getTabWidget().getChildAt(4);
-					if (tab != null) {
+					View view = vp.getChildAt(4);
+					if (view != null) {
 						if (this.m_perksadapter.isEmpty()) {
-							tab.setVisibility(View.GONE);
+							view.setVisibility(View.GONE);
 						} else {
-							tab.setVisibility(View.VISIBLE);
-						}
+							view.setVisibility(View.VISIBLE);
+						}					
 					}
 
 					// Generate list of Quirks
 					setupTraitList(this.m_quirksadapter,
 							character.getElementsByTagName("Quirk"));
-
-					tab = getTabHost().getTabWidget().getChildAt(5);
-					if (tab != null) {
-						if (this.m_quirksadapter.isEmpty()) {
-							tab.setVisibility(View.GONE);
+					view = vp.getChildAt(5);
+					if (view != null) {
+						if (this.m_perksadapter.isEmpty()) {
+							view.setVisibility(View.GONE);
 						} else {
-							tab.setVisibility(View.VISIBLE);
-						}
-					}
+							view.setVisibility(View.VISIBLE);
+						}					
+					}					
 
 					// Generate list of skills
 					List<Skill> skillsList = Skill.generate(character
@@ -359,14 +305,15 @@ public class CharacterViewerActivity extends TabActivity {
 					}
 					this.m_rangedweaponsadapter.notifyDataSetChanged();
 
-					tab = getTabHost().getTabWidget().getChildAt(7);
-					if (tab != null) {
-						if (this.m_rangedweaponsadapter.isEmpty()) {
-							tab.setVisibility(View.GONE);
+					view = vp.getChildAt(7);
+					if (view != null) {
+						if (this.m_perksadapter.isEmpty()) {
+							view.setVisibility(View.GONE);
 						} else {
-							tab.setVisibility(View.VISIBLE);
-						}
+							view.setVisibility(View.VISIBLE);
+						}					
 					}
+					
 					// Melee Weapons
 					List<MeleeWeapon> meleeWeaponList = MeleeWeapon
 							.generate((NodeList) xPath.evaluate(
@@ -379,13 +326,13 @@ public class CharacterViewerActivity extends TabActivity {
 					}
 					this.m_meleeweaponsadapter.notifyDataSetChanged();
 
-					tab = getTabHost().getTabWidget().getChildAt(8);
-					if (tab != null) {
-						if (this.m_meleeweaponsadapter.isEmpty()) {
-							tab.setVisibility(View.GONE);
+					view = vp.getChildAt(8);
+					if (view != null) {
+						if (this.m_perksadapter.isEmpty()) {
+							view.setVisibility(View.GONE);
 						} else {
-							tab.setVisibility(View.VISIBLE);
-						}
+							view.setVisibility(View.VISIBLE);
+						}					
 					}
 
 					// Other Equipment
@@ -400,13 +347,13 @@ public class CharacterViewerActivity extends TabActivity {
 					}
 					this.m_equipmentadapter.notifyDataSetChanged();
 
-					tab = getTabHost().getTabWidget().getChildAt(9);
-					if (tab != null) {
-						if (this.m_equipmentadapter.isEmpty()) {
-							tab.setVisibility(View.GONE);
+					view = vp.getChildAt(9);
+					if (view != null) {
+						if (this.m_perksadapter.isEmpty()) {
+							view.setVisibility(View.GONE);
 						} else {
-							tab.setVisibility(View.VISIBLE);
-						}
+							view.setVisibility(View.VISIBLE);
+						}					
 					}
 
 					// Spells
@@ -418,13 +365,13 @@ public class CharacterViewerActivity extends TabActivity {
 						this.m_spelladapter.add(spells.get(i));
 					}
 					this.m_spelladapter.notifyDataSetChanged();
-					tab = getTabHost().getTabWidget().getChildAt(10);
-					if (tab != null) {
-						if (this.m_spelladapter.isEmpty()) {
-							tab.setVisibility(View.GONE);
+					view = vp.getChildAt(10);
+					if (view != null) {
+						if (this.m_perksadapter.isEmpty()) {
+							view.setVisibility(View.GONE);
 						} else {
-							tab.setVisibility(View.VISIBLE);
-						}
+							view.setVisibility(View.VISIBLE);
+						}					
 					}
 					
 				} catch (SAXException e) {
