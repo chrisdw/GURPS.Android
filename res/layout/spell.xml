@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:padding="5dip" >
     
     <TextView
         android:id="@+id/txtName"
@@ -10,14 +11,14 @@
         android:layout_height="wrap_content"
         android:text="@string/val_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
+    
     <TextView
         android:id="@+id/txtLevel"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/val_level"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+    
     <TextView
         android:id="@+id/txtPoints"
         android:layout_width="100dp"
